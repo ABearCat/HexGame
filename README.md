@@ -19,3 +19,4 @@ The board will be represented in an array of this size, where the only locations
 This array is meant to represent a hexagon regular hexagon that is 5 units wide on any edge, as a result a successful line clear will involve either fully filling out any of the rows (including short rows), columns (including short columns) and right leaning diagonals.
 At any point, there would be 27 potential lines that could be filled out. This project will first be written in a simple manner designed to just iterate through all 27 in order to find any completed lines, whereas the later version will only check the lines surrounding the piece most recently placed.
 Likely to be written either in Unity, Android, or Java? Maybe all 3 eventually
+Rewrite of Hex FRVR and a few other mobile games available
