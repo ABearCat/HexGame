@@ -1,0 +1,145 @@
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<style>
+canvas {
+    border:1px solid #d3d3d3;
+    background-color: #F6F6F6;
+}
+</style>
+</head>
+<body onload="startGame()">
+<!--<embed name="BrainPower" autoplay= "true" loop="true" hidden="true" src="music/BrainPower.mp3"></embed>-->
+<script>
+//var canvasWidth = 1200;
+//var canvasHeight = 650;
+var frame;    
+var hexagon[][];
+var i = 0;
+var j = 0;
+for (int i = 0; i < 9; i++){
+    for (int j = 0; j < 9; j++){
+        hexagon[i][j]=-1;
+    }
+}
+
+function resetBoard() {
+    i = 0;
+    j = 0;
+    for (int i = 0; i < 9; i++){
+    for (int j = 0; j < 9; j++){
+            hexagon[i][j]=-1;
+        }
+    }
+    //Corner 1
+    hexagon[5][0] = 0;
+    hexagon[6][0] = 0;
+    hexagon[7][0] = 0;
+    hexagon[8][0] = 0;
+    hexagon[9][0] = 0;
+    hexagon[6][1] = 0;
+    hexagon[7][1] = 0;
+    hexagon[8][1] = 0;
+    hexagon[9][1] = 0;
+    hexagon[7][2] = 0;
+    hexagon[8][2] = 0;
+    hexagon[9][2] = 0;
+    hexagon[8][3] = 0;
+    hexagon[9][3] = 0;
+    hexagon[9][4] = 0;
+
+    //Corner 2
+    hexagon[0][5] = 0;
+    hexagon[0][6] = 0;
+    hexagon[0][7] = 0;
+    hexagon[0][8] = 0;
+    hexagon[0][9] = 0;
+    hexagon[1][6] = 0;
+    hexagon[1][7] = 0;
+    hexagon[1][8] = 0;
+    hexagon[1][9] = 0;
+    hexagon[2][7] = 0;
+    hexagon[2][8] = 0;
+    hexagon[2][9] = 0;
+    hexagon[3][8] = 0;
+    hexagon[3][9] = 0;
+    hexagon[4][9] = 0;
+}
+
+function createPieces() {
+
+}
+    
+function startGame() {
+    
+}
+var myGameArea = {
+    canvas : document.createElement("canvas"),
+    start : function() {
+        this.canvas.width = canvasWidth;
+        this.canvas.height = canvasHeight;
+        this.context = this.canvas.getContext("2d");
+        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+        this.interval = setInterval(updateGameArea, 4);
+		window.addEventListener('keydown', function (e) {
+            myGameArea.keys = (myGameArea.keys || []);
+            myGameArea.keys[e.keyCode] = true;
+        })
+        window.addEventListener('keyup', function (e) {
+            myGameArea.keys[e.keyCode] = false;
+            if (e.keyCode == 87 || e.keyCode == 38)
+                airTime = 0;
+        })
+    },
+    clear : function() {
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    },
+    stop : function() {
+        clearInterval(this.interval);
+    }
+}
+function component(width, height, color, x, y, type) {
+
+}
+    
+function updateGameArea() {
+    myGameArea.clear();
+	//document.write('score: ' + score);
+    scoreDisplay.color = "Score: " + score;
+    scoreDisplay.update();
+
+}
+    
+function gameOver() {
+	localStorage.setItem('Score', '' + score)
+    myGameArea.stop();
+    sleep(500);
+}
+
+function sleep(milliseconds) {
+  var start = new Date().getTime();
+  for (var i = 0; i < 1e7; i++) {
+    if ((new Date().getTime() - start) > milliseconds){
+      break;
+    }
+  }
+}    
+
+//function sound(src) {
+//    this.sound = document.createElement("audio");
+//    this.sound.src = src;
+//    this.sound.setAttribute("preload", "auto");
+//    this.sound.setAttribute("controls", "none");
+//    this.sound.style.display = "none";
+//    document.body.appendChild(this.sound);
+//    this.play = function(){
+//        this.sound.play();
+//    }
+//    this.stop = function(){
+//        this.sound.pause();
+//    }
+//}    
+    
+</script>
+</body>
+</html>
