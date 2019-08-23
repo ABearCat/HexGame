@@ -11,65 +11,66 @@ canvas {
 <body onload="startGame()">
 <!--<embed name="BrainPower" autoplay= "true" loop="true" hidden="true" src="music/BrainPower.mp3"></embed>-->
 <script>
-//var canvasWidth = 1200;
-//var canvasHeight = 650;
+var canvasWidth = 1200;
+var canvasHeight = 650;
 var frame;    
 var hexagon[[]];
 var i = 0;
 var j = 0;
-for (int i = 0; i < 9; i++){
-    for (int j = 0; j < 9; j++){
+const edgeLength = 5;
+const boardLength = 9;
+var currentPieces = 0;
+var first;
+var second;
+var third;
+var piece;
+
+/*
+just make sure to call reset at startgame
+for (i = 0; i < 9; i++){
+    for (j = 0; j < 9; j++){
         hexagon[i][j]=-1;
     }
 }
+*/
 
 function resetBoard() {
-    for (i = 0; i < 9; i++){
-    for (j = 0; j < 9; j++){
+    //reset board to -1 including corners
+    for (i = 0; i < boardLength; i++){
+        for (j = 0; j < boardLength; j++){
             hexagon[i][j]=-1;
         }
     }
-    //Corner 1
-    hexagon[5][0] = 0;
-    hexagon[6][0] = 0;
-    hexagon[7][0] = 0;
-    hexagon[8][0] = 0;
-    hexagon[9][0] = 0;
-    hexagon[6][1] = 0;
-    hexagon[7][1] = 0;
-    hexagon[8][1] = 0;
-    hexagon[9][1] = 0;
-    hexagon[7][2] = 0;
-    hexagon[8][2] = 0;
-    hexagon[9][2] = 0;
-    hexagon[8][3] = 0;
-    hexagon[9][3] = 0;
-    hexagon[9][4] = 0;
-
-    //Corner 2
-    hexagon[0][5] = 0;
-    hexagon[0][6] = 0;
-    hexagon[0][7] = 0;
-    hexagon[0][8] = 0;
-    hexagon[0][9] = 0;
-    hexagon[1][6] = 0;
-    hexagon[1][7] = 0;
-    hexagon[1][8] = 0;
-    hexagon[1][9] = 0;
-    hexagon[2][7] = 0;
-    hexagon[2][8] = 0;
-    hexagon[2][9] = 0;
-    hexagon[3][8] = 0;
-    hexagon[3][9] = 0;
-    hexagon[4][9] = 0;
+    //Sets proper values for corners
+    for (i = edgeLength; i < boardLength; i++){
+        for (j = 0; j < 4; j++){
+            if (i>(j+5)){
+                hexagon[i][j] = 0;
+                hexagon[j][i] = 0;
+            }
+        }
+    }
 }
 
-function createPieces() {
+function createPieces(){
+    //11 pieces needed 
+    //1 single dot, 3 bar pieces, 6 U pieces, 6 bar + left, 6 bar + right
 
 }
+
+//generates a random value from 0 to 21 since there are 22 possible pieces
+function generatePiece(){
+    var rng= Math.random() * 22;
+    Math.floor(rng);
+    return rng;
+}
     
-function startGame() {
-    
+//clears board state, generates new pieces for all pieces
+function startGame(){
+    resetBoard();
+    first = createPieces(generatePiece);
+    second = createPieces(generatePiece);
+    third = createPieces(generatePiece);
 }
 var myGameArea = {
     canvas : document.createElement("canvas"),
@@ -79,7 +80,7 @@ var myGameArea = {
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
         this.interval = setInterval(updateGameArea, 4);
-		window.addEventListener('keydown', function (e) {
+        window.addEventListener('keydown', function (e) {
             myGameArea.keys = (myGameArea.keys || []);
             myGameArea.keys[e.keyCode] = true;
         })
@@ -102,14 +103,14 @@ function component(width, height, color, x, y, type) {
     
 function updateGameArea() {
     myGameArea.clear();
-	//document.write('score: ' + score);
+    //document.write('score: ' + score);
     scoreDisplay.color = "Score: " + score;
     scoreDisplay.update();
 
 }
     
 function gameOver() {
-	localStorage.setItem('Score', '' + score)
+    localStorage.setItem('Score', '' + score)
     myGameArea.stop();
     sleep(500);
 }
